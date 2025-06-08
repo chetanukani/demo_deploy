@@ -1,12 +1,11 @@
 const express = require('express');
+const serverless = require('serverless-http');
 const app = express();
-require('dotenv').config();
+const router = express.Router();
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.status(200).json({ message: 'Hello World! Node' });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-    console.log(`server is running on port ${port}`);
-});
+app.use('/.netlify/functions/app', router);
+module.exports.handler = serverless(app);
