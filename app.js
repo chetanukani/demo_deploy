@@ -1,13 +1,12 @@
-// YOUR_BASE_DIRECTORY/netlify/functions/api.ts
+const express = require('express');
+const app = express();
+require('dotenv').config();
 
-import express, { Router } from "express";
-import serverless from "serverless-http";
+app.get('/', (req, res) => {
+    res.status(200).json({ message: 'Hello World! Node' });
+});
 
-const api = express();
-
-const router = Router();
-router.get("/hello", (req, res) => res.send("Hello World!"));
-
-api.use("/api/", router);
-
-export const handler = serverless(api);
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`server is running on port ${port}`);
+});
